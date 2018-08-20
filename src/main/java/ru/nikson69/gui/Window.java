@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 
 public class Window extends JFrame {
 
-    private Game game;
+    private final Game game;
     private JPanel panel;
     private JLabel label;
     private final int IMAGE_SIZE = 50;
@@ -65,9 +65,9 @@ public class Window extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                for (Coord coord : Ranges.getAllCoords()) {
-                    g.drawImage((Image) game.getImageBox(coord).image,
-                            coord.x * IMAGE_SIZE, coord.y * IMAGE_SIZE, this);
+                for (Cord cord : Ranges.getAllCords()) {
+                    g.drawImage((Image) game.getImageBox(cord).image,
+                            cord.x * IMAGE_SIZE, cord.y * IMAGE_SIZE, this);
 
                 }
             }
@@ -94,13 +94,13 @@ public class Window extends JFrame {
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / IMAGE_SIZE;
                 int y = e.getY() / IMAGE_SIZE;
-                Coord coord = new Coord(x, y);
+                Cord cord = new Cord(x, y);
                 if (e.getButton() == MouseEvent.BUTTON1)
-                    game.openToBox(coord);
+                    game.openToBox(cord);
                 if (e.getButton() == MouseEvent.BUTTON3)
-                    game.flagAndCloseToBox(coord);
+                    game.flagAndCloseToBox(cord);
                 if (e.getButton() == MouseEvent.BUTTON2)
-                    game.openBoxAround(coord);
+                    game.openBoxAround(cord);
 
                 panel.repaint();
                 label.setText(getMessage());

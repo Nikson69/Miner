@@ -22,23 +22,23 @@ class Bomb {
             totalBombs = maxBombs;
     }
 
-    ImagesBox get(Coord coord) {
-        return bombMap.get(coord);
+    ImagesBox get(Cord cord) {
+        return bombMap.get(cord);
     }
 
     private void placeBomb() {
         while (true) {
-            Coord coord = Ranges.getRandomCoord();
-            if (ImagesBox.BOMB == bombMap.get(coord))
+            Cord cord = Ranges.getRandomCord();
+            if (ImagesBox.BOMB == bombMap.get(cord))
                 continue;
-            bombMap.set(coord, ImagesBox.BOMB);
-            incNumberAroundBomb(coord);
+            bombMap.set(cord, ImagesBox.BOMB);
+            incNumberAroundBomb(cord);
             break;
         }
     }
 
-    private void incNumberAroundBomb(Coord coord) {
-        for (Coord around : Ranges.getCoordsAround(coord))
+    private void incNumberAroundBomb(Cord cord) {
+        for (Cord around : Ranges.getCordsAround(cord))
             if (ImagesBox.BOMB != bombMap.get(around))
                 bombMap.set(around, bombMap.get(around).nextNumberMinerImage());
     }

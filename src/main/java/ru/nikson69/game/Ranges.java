@@ -5,43 +5,43 @@ import java.util.Random;
 
 public class Ranges {
 
-    private static Coord size;
-    private static ArrayList<Coord> allCoords;
-    private static Random random = new Random();
+    private static Cord size;
+    private static ArrayList<Cord> allCords;
+    private final static Random random = new Random();
 
-    public static void setSize(Coord _size) {
+    public static void setSize(Cord _size) {
         size = _size;
-        allCoords = new ArrayList<Coord>();
+        allCords = new ArrayList<>();
         for (int y = 0; y < size.y; y++) {
             for (int x = 0; x < size.x; x++) {
-                allCoords.add(new Coord(x, y));
+                allCords.add(new Cord(x, y));
             }
         }
     }
 
-    public static Coord getSize() {
+    public static Cord getSize() {
         return size;
     }
 
-    public static ArrayList<Coord> getAllCoords() {
-        return allCoords;
+    public static ArrayList<Cord> getAllCords() {
+        return allCords;
     }
 
-    static boolean inRange(Coord coord) {
-        return coord.x >= 0 && coord.x < size.x && coord.y >= 0 && coord.y < size.y;
+    static boolean inRange(Cord cord) {
+        return cord.x >= 0 && cord.x < size.x && cord.y >= 0 && cord.y < size.y;
     }
 
-    static Coord getRandomCoord() {
-        return new Coord(random.nextInt(size.x), random.nextInt(size.y));
+    static Cord getRandomCord() {
+        return new Cord(random.nextInt(size.x), random.nextInt(size.y));
     }
 
-    static ArrayList<Coord> getCoordsAround(Coord coord) {
-        Coord around;
-        ArrayList<Coord> list = new ArrayList<Coord>();
-        for (int x = coord.x - 1; x <= coord.x + 1; x++)
-            for (int y = coord.y - 1; y <= coord.y + 1; y++)
-                if (inRange(around = new Coord(x, y)))
-                    if (!around.equals(coord))
+    static ArrayList<Cord> getCordsAround(Cord cord) {
+        Cord around;
+        ArrayList<Cord> list = new ArrayList<>();
+        for (int x = cord.x - 1; x <= cord.x + 1; x++)
+            for (int y = cord.y - 1; y <= cord.y + 1; y++)
+                if (inRange(around = new Cord(x, y)))
+                    if (!around.equals(cord))
                         list.add(around);
         return list;
     }

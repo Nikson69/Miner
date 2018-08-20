@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private Bomb bomb;
-    private Flag flag;
+    private final Bomb bomb;
+    private final Flag flag;
     private int bombCounter;
     private GameState state;
     private boolean statusOpening;
-    private ArrayList<Coord> coords = new ArrayList<Coord>();
+    private final ArrayList<Cord> cords = new ArrayList<>();
 
     public Game(int cols, int rows, int bombs) {
-        Ranges.setSize(new Coord(cols, rows));
+        Ranges.setSize(new Cord(cols, rows));
         bomb = new Bomb(bombs);
         flag = new Flag();
     }
@@ -32,22 +32,22 @@ public class Game {
         return state;
     }
 
-    public ImagesBox getImageBox(Coord coord) {
-        if (flag.get(coord) == ImagesBox.OPENED)
-            return bomb.get(coord);
+    public ImagesBox getImageBox(Cord cord) {
+        if (flag.get(cord) == ImagesBox.OPENED)
+            return bomb.get(cord);
         else
-            return flag.get(coord);
+            return flag.get(cord);
     }
 
     /**
      *   Action
      *   opens the cell
      */
-    public void openToBox(Coord coord) {
+    public void openToBox(Cord cord) {
         if (state == GameState.NEWGAME)
             state = GameState.PLAYED;
         if (gameOver()) return;
-        openBox(coord);
+        openBox(cord);
         checkWinner();
     }
 
@@ -57,58 +57,57 @@ public class Game {
                 state = GameState.WINNER;
     }
 
-    private void openBox(Coord coord) {
-        switch (flag.get(coord)) {
+    private void openBox(Cord cord) {
+        switch (flag.get(cord)) {
             case OPENED:
-                setOpenedToClosedBoxesAroundNumber(coord);
+                setOpenedToClosedBoxesAroundNumber(cord);
                 return;
             case FLAGED:
                 if (statusOpening) {
                     statusOpening = false;
-                    setOpenedToClosedBoxesAroundNumber(coord);
+                    setOpenedToClosedBoxesAroundNumber(cord);
                 } else {
                     return;
                 }
             case INFORM:
                 return;
             case CLOSED:
-                switch (bomb.get(coord)) {
+                switch (bomb.get(cord)) {
                     case ZERO:
                         statusOpening = true;
-                        openBoxesAround(coord);
+                        openBoxesAround(cord);
                         return;
                     case BOMB:
-                        openBomb(coord);
+                        openBomb(cord);
                         return;
                     default:
-                        flag.setOpenedToBox(coord);
-                        return;
+                        flag.setOpenedToBox(cord);
                 }
         }
     }
 
-    private void setOpenedToClosedBoxesAroundNumber(Coord coord) {
-        if (bomb.get(coord) != ImagesBox.BOMB)
-            if (flag.getCountOfFlagBoxesAround(coord) == bomb.get(coord).getNumber())
-                for (Coord around : Ranges.getCoordsAround(coord))
+    private void setOpenedToClosedBoxesAroundNumber(Cord cord) {
+        if (bomb.get(cord) != ImagesBox.BOMB)
+            if (flag.getCountOfFlagBoxesAround(cord) == bomb.get(cord).getNumber())
+                for (Cord around : Ranges.getCordsAround(cord))
                     if (flag.get(around) == ImagesBox.CLOSED)
                         openBox(around);
     }
 
-    private void openBomb(Coord bombed) {
+    private void openBomb(Cord bombed) {
         state = GameState.BOMBER;
         flag.setBombToBox(bombed);
-        for (Coord coord : Ranges.getAllCoords())
-            if (bomb.get(coord) == ImagesBox.BOMB)
-                flag.setOpenedToBombBox(coord);
+        for (Cord cord : Ranges.getAllCords())
+            if (bomb.get(cord) == ImagesBox.BOMB)
+                flag.setOpenedToBombBox(cord);
             else
-                flag.setNoBombToFlagToBox(coord);
+                flag.setNoBombToFlagToBox(cord);
     }
 
 
-    private void openBoxesAround(Coord coord) {
-        flag.setOpenedToBox(coord);
-        for (Coord around : Ranges.getCoordsAround(coord)) {
+    private void openBoxesAround(Cord cord) {
+        flag.setOpenedToBox(cord);
+        for (Cord around : Ranges.getCordsAround(cord)) {
             openBox(around);
         }
     }
@@ -117,40 +116,35 @@ public class Game {
      *   Action
      *   Sets the flag or closes the cell
      */
-    public void flagAndCloseToBox(Coord coord) {
+    public void flagAndCloseToBox(Cord cord) {
         if (gameOver()) return;
-        flag.toggleFlagToBox(coord);
-        if (flag.get(coord) == ImagesBox.FLAGED)
+        flag.toggleFlagToBox(cord);
+        if (flag.get(cord) == ImagesBox.FLAGED)
             bombCounter--;
-        else if (flag.get(coord) == ImagesBox.CLOSED)
+        else if (flag.get(cord) == ImagesBox.CLOSED)
             bombCounter++;
-        else return;
     }
 
     private boolean gameOver() {
-        if (state == GameState.PLAYED | state == GameState.NEWGAME)
-            return false;
-        else {
-            return true;
-        }
+        return !(state == GameState.PLAYED | state == GameState.NEWGAME);
     }
 
     /**
      *   Action
      *   Show range of coordinates
      */
-    public void openBoxAround(Coord coord) {
-        setOpenedToAroundNumber(coord);
+    public void openBoxAround(Cord cord) {
+        setOpenedToAroundNumber(cord);
     }
 
-    private void setOpenedToAroundNumber(Coord coord) {
-        if (flag.get(coord) == ImagesBox.CLOSED) {
-            coords.add(coord);
-            flag.setZeroToBox(coord);
+    private void setOpenedToAroundNumber(Cord cord) {
+        if (flag.get(cord) == ImagesBox.CLOSED) {
+            cords.add(cord);
+            flag.setZeroToBox(cord);
         }
-        for (Coord around : Ranges.getCoordsAround(coord)) {
+        for (Cord around : Ranges.getCordsAround(cord)) {
             if (flag.get(around) == ImagesBox.CLOSED) {
-                coords.add(around);
+                cords.add(around);
                 flag.setZeroToBox(around);
             }
         }
@@ -162,9 +156,8 @@ public class Game {
      * Close the open cells
      */
     public void closedOpenToBox() {
-        if (coords != null)
-            for (Coord coord : coords)
-                flag.setClosedToBox(coord);
-        coords.clear();
+        for (Cord cord : cords)
+            flag.setClosedToBox(cord);
+        cords.clear();
     }
 }

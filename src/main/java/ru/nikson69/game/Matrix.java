@@ -1,23 +1,23 @@
 package ru.nikson69.game;
 
 class Matrix {
-    private ImagesBox[][] matrix;
+    private final ImagesBox[][] matrix;
 
     Matrix(ImagesBox defaultBox) {
         matrix = new ImagesBox[Ranges.getSize().x][Ranges.getSize().y];
-        for (Coord coord : Ranges.getAllCoords()) {
-            matrix[coord.x][coord.y] = defaultBox;
+        for (Cord cord : Ranges.getAllCords()) {
+            matrix[cord.x][cord.y] = defaultBox;
         }
     }
 
-    ImagesBox get(Coord coord) {
-        if (Ranges.inRange(coord))
-            return matrix[coord.x][coord.y];
+    ImagesBox get(Cord cord) {
+        if (Ranges.inRange(cord))
+            return matrix[cord.x][cord.y];
         return null;
     }
 
-    void set(Coord coord, ImagesBox imagesBox) {
-        if (Ranges.inRange(coord))
-            matrix[coord.x][coord.y] = imagesBox;
+    void set(Cord cord, ImagesBox imagesBox) {
+        if (Ranges.inRange(cord))
+            matrix[cord.x][cord.y] = imagesBox;
     }
 }
