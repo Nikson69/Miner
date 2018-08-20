@@ -40,7 +40,8 @@ public class Game {
     }
 
     /**
-     *   Opens the cell
+     *   Action
+     *   opens the cell
      */
     public void openToBox(Coord coord) {
         if (state == GameState.NEWGAME)
@@ -113,6 +114,7 @@ public class Game {
     }
 
     /**
+     *   Action
      *   Sets the flag or closes the cell
      */
     public void flagAndCloseToBox(Coord coord) {
@@ -134,6 +136,7 @@ public class Game {
     }
 
     /**
+     *   Action
      *   Show range of coordinates
      */
     public void openBoxAround(Coord coord) {
@@ -154,6 +157,7 @@ public class Game {
     }
 
     /**
+     * Action
      * Used to complete the openBoxAround method
      * Close the open cells
      */
