@@ -15,9 +15,9 @@ public class Window extends JFrame {
     private final int IMAGE_SIZE = 50;
 
     public Window() {
-        int COLS = 9;
-        int ROWS = 9;
-        int BOMBS = 10;
+        int COLS = 10;
+        int ROWS = 10;
+        int BOMBS = 13;
         game = new Game(COLS, ROWS, BOMBS);
         game.start();
         setImages();
