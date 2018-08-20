@@ -1,81 +1,77 @@
 package ru.nikson69.game;
 
 class Flag {
+
     private Matrix flagMap;
     private int countOfClosedBoxes;
 
-    void start (){
-        flagMap = new Matrix(MinerImages.CLOSED);
+    void start() {
+        flagMap = new Matrix(ImagesBox.CLOSED);
         countOfClosedBoxes = Ranges.getSize().x * Ranges.getSize().y;
     }
 
-    MinerImages get (Coord coord){
+    ImagesBox get(Coord coord) {
         return flagMap.get(coord);
     }
 
     void setOpenedToBox(Coord coord) {
-        flagMap.set(coord, MinerImages.OPENED);
+        flagMap.set(coord, ImagesBox.OPENED);
         countOfClosedBoxes--;
-
     }
 
-    void setFlagetToBox(Coord coord) {
-        flagMap.set(coord,MinerImages.FLAGED);
+    private void setFlagToBox(Coord coord) {
+        flagMap.set(coord, ImagesBox.FLAGED);
     }
 
-    void toggleFlagedToBox(Coord coord) {
-        switch (flagMap.get(coord)){
-            case FLAGED: setInformToBox (coord); break;
-            case INFORM: setClosedToBox (coord); break;
-            case CLOSED: setFlagetToBox(coord); break;
-
-//            case FLAGED:
-//
-//                setClosedToBox (coord);
-//                break;
-//            case CLOSED:
-//
-//                setFlagetToBox(coord);
-//                break;
+    void toggleFlagToBox(Coord coord) {
+        switch (flagMap.get(coord)) {
+            case FLAGED:
+                setInformToBox(coord);
+                break;
+            case INFORM:
+                setClosedToBox(coord);
+                break;
+            case CLOSED:
+                setFlagToBox(coord);
+                break;
         }
     }
 
-
     private void setInformToBox(Coord coord) {
-        flagMap.set(coord,MinerImages.INFORM);
+        flagMap.set(coord, ImagesBox.INFORM);
     }
 
-    public void setClosedToBox(Coord coord) {
-        flagMap.set(coord,MinerImages.CLOSED);
+    void setClosedToBox(Coord coord) {
+        flagMap.set(coord, ImagesBox.CLOSED);
     }
 
     int getCountOfClosedBoxed() {
         return countOfClosedBoxes;
     }
 
-    void setBobmedToBox(Coord coord) {
-        flagMap.set(coord, MinerImages.BOMB);
+    void setBombToBox(Coord coord) {
+        flagMap.set(coord, ImagesBox.BOMB);
     }
 
     void setOpenedToBombBox(Coord coord) {
-        if (flagMap.get(coord) == MinerImages.CLOSED);
-            flagMap.set(coord, MinerImages.OPENED);
+        if (flagMap.get(coord) == ImagesBox.CLOSED) ;
+        flagMap.set(coord, ImagesBox.OPENED);
     }
 
-    void setNoBobmToFlagetToBox(Coord coord) {
-        if (flagMap.get(coord) == MinerImages.FLAGED)
-            flagMap.set(coord,MinerImages.NOBOMB);
+    void setNoBombToFlagToBox(Coord coord) {
+        if (flagMap.get(coord) == ImagesBox.FLAGED)
+            flagMap.set(coord, ImagesBox.NOBOMB);
     }
 
-    int getCountOfFlagedBoxesAround(Coord coord) {
+    int getCountOfFlagBoxesAround(Coord coord) {
         int count = 0;
         for (Coord around : Ranges.getCoordsAround(coord))
-            if (flagMap.get(around) == MinerImages.FLAGED)
+            if (flagMap.get(around) == ImagesBox.FLAGED)
                 count++;
         return count;
     }
 
-    public void setZeroToBox(Coord coord) {
-        flagMap.set(coord, MinerImages.ZERO);
+    void setZeroToBox(Coord coord) {
+        flagMap.set(coord, ImagesBox.ZERO);
     }
 }

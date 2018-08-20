@@ -1,6 +1,6 @@
 package ru.nikson69.game;
 
-public enum  GameState {
+public enum GameState {
     PLAYED,
     BOMBER,
     WINNER,

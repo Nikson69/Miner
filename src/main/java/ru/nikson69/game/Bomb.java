@@ -1,49 +1,49 @@
 package ru.nikson69.game;
 
-public class Bomb {
+class Bomb {
 
     private Matrix bombMap;
     private int totalBombs;
 
-    Bomb(int totalBombs){
+    Bomb(int totalBombs) {
         this.totalBombs = totalBombs;
         fixBombCount();
     }
 
-    void start(){
-        bombMap = new Matrix(MinerImages.ZERO);
+    void start() {
+        bombMap = new Matrix(ImagesBox.ZERO);
         for (int i = 0; i < totalBombs; i++)
-        placeBomb();
+            placeBomb();
     }
 
-    MinerImages get (Coord coord){
+    private void fixBombCount() {
+        int maxBombs = Ranges.getSize().x * Ranges.getSize().y / 2;
+        if (totalBombs > maxBombs)
+            totalBombs = maxBombs;
+    }
+
+    ImagesBox get(Coord coord) {
         return bombMap.get(coord);
     }
 
-    private void fixBombCount(){
-        int maxBombs = Ranges.getSize().x * Ranges.getSize().y/2;
-        if (totalBombs > maxBombs)
-            totalBombs = maxBombs;
-}
-
-    private void placeBomb(){
-        while (true){
+    private void placeBomb() {
+        while (true) {
             Coord coord = Ranges.getRandomCoord();
-            if (MinerImages.BOMB == bombMap.get(coord))
+            if (ImagesBox.BOMB == bombMap.get(coord))
                 continue;
-            bombMap.set(coord,MinerImages.BOMB);
+            bombMap.set(coord, ImagesBox.BOMB);
             incNumberAroundBomb(coord);
             break;
         }
     }
 
-    private void incNumberAroundBomb (Coord coord){
+    private void incNumberAroundBomb(Coord coord) {
         for (Coord around : Ranges.getCoordsAround(coord))
-            if (MinerImages.BOMB != bombMap.get(around))
-                bombMap.set(around,bombMap.get(around).nextNumberMinerImage());
+            if (ImagesBox.BOMB != bombMap.get(around))
+                bombMap.set(around, bombMap.get(around).nextNumberMinerImage());
     }
 
-     int getTotalBombs() {
+    int getTotalBombs() {
         return totalBombs;
     }
 }
