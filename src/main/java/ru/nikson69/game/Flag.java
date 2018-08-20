@@ -4,10 +4,6 @@ class Flag {
     private Matrix flagMap;
     private int countOfClosedBoxes;
 
-
-
-    int flagedCounter = 0;
-
     void start (){
         flagMap = new Matrix(MinerImages.CLOSED);
         countOfClosedBoxes = Ranges.getSize().x * Ranges.getSize().y;
@@ -29,23 +25,21 @@ class Flag {
 
     void toggleFlagedToBox(Coord coord) {
         switch (flagMap.get(coord)){
-//            case FLAGED: setInformToBox (coord); break;
-//            case INFORM: setClosedToBox (coord); break;
-//            case CLOSED: setFlagetToBox(coord); break;
-            case FLAGED:
-                flagedCounter--;
-                setClosedToBox (coord);
-                break;
-            case CLOSED:
-                flagedCounter++;
-                setFlagetToBox(coord);
-                break;
+            case FLAGED: setInformToBox (coord); break;
+            case INFORM: setClosedToBox (coord); break;
+            case CLOSED: setFlagetToBox(coord); break;
+
+//            case FLAGED:
+//
+//                setClosedToBox (coord);
+//                break;
+//            case CLOSED:
+//
+//                setFlagetToBox(coord);
+//                break;
         }
     }
 
-    public int getFlagedCounter() {
-        return flagedCounter;
-    }
 
     private void setInformToBox(Coord coord) {
         flagMap.set(coord,MinerImages.INFORM);

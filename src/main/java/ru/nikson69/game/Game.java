@@ -72,7 +72,7 @@ public class Game {
             } else {
                 return;
             }
-            //case INFORM:
+            case INFORM: return;
             case CLOSED:
                 //openBoxClosedAndInform(coord);
                 switch (bomb.get(coord)){
