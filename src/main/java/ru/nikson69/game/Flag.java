@@ -19,7 +19,7 @@ class Flag {
         countOfClosedBoxes--;
     }
 
-    private void setFlagToBox(Cord cord) {
+    void setFlagToBox(Cord cord) {
         flagMap.set(cord, ImagesBox.FLAGED);
     }
 

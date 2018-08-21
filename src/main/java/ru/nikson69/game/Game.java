@@ -54,8 +54,13 @@ public class Game {
 
     private void checkWinner() {
         if (state == GameState.PLAYED)
-            if (flag.getCountOfClosedBoxed() == bomb.getTotalBombs())
+            if (flag.getCountOfClosedBoxed() == bomb.getTotalBombs()){
                 state = GameState.WINNER;
+                for (Cord cord: Ranges.getAllCords()){
+                    if (flag.get(cord)==ImagesBox.CLOSED | flag.get(cord)==ImagesBox.INFORM)
+                        flag.setFlagToBox(cord);
+                }
+            }
     }
 
     private void openBox(Cord cord) {

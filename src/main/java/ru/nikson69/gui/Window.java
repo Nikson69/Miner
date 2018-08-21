@@ -42,7 +42,6 @@ public class Window extends JFrame {
                 label.setText(getMessage());
                 label.setBackground(getColorGameState());
                 panel.repaint();
-
             }
         });
 
@@ -74,10 +73,9 @@ public class Window extends JFrame {
                 System.exit(0);
             }
         });
-
+        
         difficulty.add(easy);
         difficulty.add(normal);
-
         menu.add(newGame);
         menu.addSeparator();
         menu.add(exit);
