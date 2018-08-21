@@ -9,16 +9,14 @@ import java.awt.event.MouseEvent;
 
 public class Window extends JFrame {
 
-    private final Game game;
+    private Game game;
     private JPanel panel;
     private JLabel label;
     private final int IMAGE_SIZE = 50;
+    private byte difficultySet = 1;
 
     public Window() {
-        int COLS = 10;
-        int ROWS = 10;
-        int BOMBS = 13;
-        game = new Game(COLS, ROWS, BOMBS);
+        game = new Game(8, 8, 10);
         game.start();
         setImages();
         initPanel();
@@ -30,7 +28,10 @@ public class Window extends JFrame {
     private void initMenu() {
         JMenuBar jMenuBar = new JMenuBar();
         JMenu menu = new JMenu("Игра");
+        JMenu difficulty = new JMenu("Сложность");
         JMenuItem newGame = new JMenuItem("Новая игра");
+        JMenuItem easy = new JMenuItem("Легко");
+        JMenuItem normal = new JMenuItem("Средне");
         JMenuItem exit = new JMenuItem("Выход");
 
         newGame.addMouseListener(new MouseAdapter() {
@@ -45,6 +46,28 @@ public class Window extends JFrame {
             }
         });
 
+        easy.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (difficultySet == 1)
+                    return;
+                game = new Game(8, 8, 10);
+                installGame();
+                difficultySet = 1;
+            }
+        });
+
+        normal.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (difficultySet == 2)
+                    return;
+                game = new Game(9, 9, 17);
+                installGame();
+                difficultySet = 2;
+            }
+        });
+
         exit.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -52,16 +75,29 @@ public class Window extends JFrame {
             }
         });
 
+        difficulty.add(easy);
+        difficulty.add(normal);
+
         menu.add(newGame);
         menu.addSeparator();
         menu.add(exit);
         jMenuBar.add(menu);
+        jMenuBar.add(difficulty);
         setJMenuBar(jMenuBar);
     }
 
+    private void installGame(){
+        game.start();
+        setImages();
+        initPanel();
+        initFrame();
+        initMenu();
+        initLabel();
+        repaint();
+    }
+
     private void initPanel() {
-        panel = new JPanel()
-        {
+        panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);

@@ -1,5 +1,7 @@
 package ru.nikson69.game;
 
+import ru.nikson69.game.ImagesBox;
+
 class Matrix {
     private final ImagesBox[][] matrix;
 
